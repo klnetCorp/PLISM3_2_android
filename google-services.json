@@ -1,0 +1,34 @@
+{
+  "project_info": {
+    "project_number": "337786108061",
+    "firebase_url": "https://plism3-1260.firebaseio.com",
+    "project_id": "plism3-1260"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337786108061:android:131008ee1ce6f31e",
+        "android_client_info": {
+          "package_name": "com.klnet.plism3.plsim3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5oQ9CPnWDp9nMpOG6beKNSzR6AjTd_rI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337786108061-t4gvrnnmil4jde4c1vmfarh8vusttkep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
