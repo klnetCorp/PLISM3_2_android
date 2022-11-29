@@ -40,17 +40,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name=".PushActivity"
+            android:exported="true"
             android:screenOrientation="unspecified"
             android:theme="@style/CustomStyle">
             <intent-filter>
@@ -62,14 +63,16 @@
 
         <!--아래 두개의 서비스 태그를 추가한다.-->
         <service
-            android:name=".MyFirebaseMessagingService">
+            android:name=".MyFirebaseMessagingService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".MyFirebaseInstanceIDService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>

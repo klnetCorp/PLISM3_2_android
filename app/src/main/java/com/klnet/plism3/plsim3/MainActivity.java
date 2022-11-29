@@ -1,13 +1,8 @@
 package com.klnet.plism3.plsim3;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -17,24 +12,21 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
-import android.telephony.TelephonyManager;
-import android.util.AttributeSet;
+import androidx.appcompat.view.ContextThemeWrapper;
+
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -43,7 +35,6 @@ import android.view.WindowManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
-import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -52,41 +43,25 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.w3c.dom.NodeList;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import static android.os.Build.VERSION_CODES.M;
 
