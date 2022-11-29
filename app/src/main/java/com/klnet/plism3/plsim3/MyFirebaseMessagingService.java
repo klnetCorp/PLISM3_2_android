@@ -24,6 +24,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
 
+
+    /* 토큰이 새로 만들어질때나 refresh 될때  */
+    @Override
+    public void onNewToken(String refreshedToken) {
+        super.onNewToken(refreshedToken);
+        Log.e(TAG, refreshedToken);
+
+        /* DB서버로 새토큰을 업데이트시킬수 있는 부분 */
+    }
+
     /**
      * Called when message is received.
      *
@@ -32,6 +42,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     // [START receive_message]
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         //앱 실행 아이콘 개수 조절
         setBadge(1);
@@ -72,7 +84,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     /**
      * Create and show a simple notification containing the received FCM message.
      *
-     * @param messageBody FCM message body received.
+     * messageBody FCM message body received.
      */
     private void sendNotification(String title, String body, JSONObject data, String add, String alert) {
         String push_id = "";

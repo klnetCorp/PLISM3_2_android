@@ -1,6 +1,7 @@
 package com.klnet.plism3.plsim3;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 isRootingFlag = checkRootingFiles(createFiles(RootFilesPath));
             }
 
-            Log.d("test", "isRootingFlag = " + isRootingFlag);
+            if (BuildConfig.DEBUG) Log.d("test", "isRootingFlag = " + isRootingFlag);
 
             alertDialogBuilderExit.setTitle("프로그램 종료");
 
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String deviceId = DataSet.getDeviceID(this);
 
-        Log.d("CHECK", "deviceId :" + deviceId);
+        if (BuildConfig.DEBUG) Log.d("CHECK", "deviceId :" + deviceId);
 
 
         //앱이 종료된 상태에서 푸시를 보는 경우
@@ -263,12 +264,14 @@ public class MainActivity extends AppCompatActivity {
                 DataSet.getInstance(). msg = getIntent().getStringExtra("msg");
                 DataSet.getInstance(). badge_num = getIntent().getStringExtra("badge_num");
 
-                Log.d("CHECK", "push value, push_id:" + DataSet.getInstance().push_id);
-                Log.d("CHECK", "push value, obj_id:" + DataSet.getInstance().obj_id);
-                Log.d("CHECK", "push value, recv_id:" + DataSet.getInstance().recv_id);
-                Log.d("CHECK", "push value, type:" + DataSet.getInstance().type);
-                Log.d("CHECK", "push value, msg:" + DataSet.getInstance().msg);
-                Log.d("CHECK", "push value, badge_num:" + DataSet.getInstance().badge_num);
+                if (BuildConfig.DEBUG) {
+                    Log.d("CHECK", "push value, push_id:" + DataSet.getInstance().push_id);
+                    Log.d("CHECK", "push value, obj_id:" + DataSet.getInstance().obj_id);
+                    Log.d("CHECK", "push value, recv_id:" + DataSet.getInstance().recv_id);
+                    Log.d("CHECK", "push value, type:" + DataSet.getInstance().type);
+                    Log.d("CHECK", "push value, msg:" + DataSet.getInstance().msg);
+                    Log.d("CHECK", "push value, badge_num:" + DataSet.getInstance().badge_num);
+                }
 
                 //앱 실행 아이콘 개수 조절
                 Intent badgeIntent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
@@ -345,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("CHECK", "received token : " + token);
             if (token == null || "".equals(token))
             {
-                Log.d("CHECK", "NOT Token");
+                if (BuildConfig.DEBUG) Log.d("CHECK", "NOT Token");
                 Message msg = mHandler.obtainMessage();
                 msg.arg1 = WAIT_TOKEN;
                 msg.obj = null;
@@ -420,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.d("CHECK", url);
+                if (BuildConfig.DEBUG) Log.d("CHECK", url);
                 if (view == null || url == null) {
                     return false;
                 }
@@ -535,9 +538,9 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences pref = getSharedPreferences("isFirst", Activity.MODE_PRIVATE);
                 boolean first = pref.getBoolean("isFirst", false);
                 String trueOrFalse = String.valueOf(first);
-                Log.d("CHECK","THE FIRST TIME :" + trueOrFalse);
+                if (BuildConfig.DEBUG) Log.d("CHECK","THE FIRST TIME :" + trueOrFalse);
                 if(first==false){
-                    Log.d("CHECK","THE FIRST TIME");
+                    if (BuildConfig.DEBUG) Log.d("CHECK","THE FIRST TIME");
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putBoolean("isFirst",true);
                     editor.commit();
@@ -581,8 +584,10 @@ public class MainActivity extends AppCompatActivity {
                     bt_prev.setImageDrawable(getResources().getDrawable(R.drawable.m02_disabled));
                     DataSet.getInstance().islogin = "true";
 
-                    Log.d("CHECK", "push id : "+ DataSet.getInstance().push_id);
-                    Log.d("CHECK", "userid : "+ DataSet.getInstance().userid);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("CHECK", "push id : " + DataSet.getInstance().push_id);
+                        Log.d("CHECK", "userid : " + DataSet.getInstance().userid);
+                    }
 
                     if( DataSet.getInstance().push_id != null && ! DataSet.getInstance().push_id.equals("") && DataSet.getInstance().userid.equals( DataSet.getInstance().recv_id)) {
                         if (!DataSet.getInstance().isrunapppush.equals("true")) {
@@ -644,10 +649,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (url.contains("/mbl/main/setting.jsp")) {
                     if (sAuthKey == null) {
-                        Log.d("CHECK", " off");
+                        if (BuildConfig.DEBUG) Log.d("CHECK", " off");
                         WebView01.loadUrl("javascript:fn_initAutoLoginButton('off', '" + deviceId + "')");
                     } else {
-                        Log.d("CHECK", " on");
+                        if (BuildConfig.DEBUG) Log.d("CHECK", " on");
                         WebView01.loadUrl("javascript:fn_initAutoLoginButton('on', '" + deviceId + "')");
                     }
 
@@ -739,7 +744,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     bt_top.setVisibility(View.VISIBLE);
                 }
-                Log.d("CHECK", "yPos : " + yPos);
+                if (BuildConfig.DEBUG) Log.d("CHECK", "yPos : " + yPos);
             }
         });
 
@@ -765,7 +770,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.arg1 == WAIT_TOKEN) {
@@ -775,13 +780,13 @@ public class MainActivity extends AppCompatActivity {
                         String token = FirebaseInstanceId.getInstance().getToken();
                         if (token == null || "".equals(token))
                         {
-                            Log.d("CHECK", "NOT Token2");
+                            if (BuildConfig.DEBUG) Log.d("CHECK", "NOT Token2");
                             Message msg = mHandler.obtainMessage();
                             msg.arg1 = WAIT_TOKEN;
                             msg.obj = null;
                             mHandler.sendMessage(msg);
                         } else {
-                            Log.d("CHECK", "Save Token2 :"+ token);
+                            if (BuildConfig.DEBUG) Log.d("CHECK", "Save Token2 :"+ token);
                             SharedPreferences prefs2 = getSharedPreferences("JPP_FCM_Property", Activity.MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs2.edit();
                             editor.putString("prefFCMRegsterID", token);
@@ -855,7 +860,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onNewIntent(intent);
 
-        Log.d("CHECK", "push_id : " + intent.getStringExtra("push_id"));
+        if (BuildConfig.DEBUG) Log.d("CHECK", "push_id : " + intent.getStringExtra("push_id"));
         //앱이 실행된 상태에서 푸시를 보는 경우
         if (intent != null) {
             if(DataSet.getInstance().islogin.equals("true")) {
@@ -869,12 +874,14 @@ public class MainActivity extends AppCompatActivity {
                     DataSet.getInstance().msg = intent.getStringExtra("msg");
                     DataSet.getInstance().badge_num = intent.getStringExtra("badge_num");
 
-                    Log.d("CHECK", "push value1, push_id:" +  DataSet.getInstance().push_id);
-                    Log.d("CHECK", "push value1, obj_id:" +  DataSet.getInstance().obj_id);
-                    Log.d("CHECK", "push value1, recv_id:" +  DataSet.getInstance().recv_id);
-                    Log.d("CHECK", "push value1, type:" +  DataSet.getInstance().type);
-                    Log.d("CHECK", "push value1, msg:" +  DataSet.getInstance().msg);
-                    Log.d("CHECK", "push value1, badge_num:" +  DataSet.getInstance().badge_num);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("CHECK", "push value1, push_id:" + DataSet.getInstance().push_id);
+                        Log.d("CHECK", "push value1, obj_id:" + DataSet.getInstance().obj_id);
+                        Log.d("CHECK", "push value1, recv_id:" + DataSet.getInstance().recv_id);
+                        Log.d("CHECK", "push value1, type:" + DataSet.getInstance().type);
+                        Log.d("CHECK", "push value1, msg:" + DataSet.getInstance().msg);
+                        Log.d("CHECK", "push value1, badge_num:" + DataSet.getInstance().badge_num);
+                    }
 
                     //앱 실행 아이콘 개수 조절
                     Intent badgeIntent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
@@ -943,7 +950,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendVersion(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendVersion(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendVersion(" + arg + ")");
 
                     String versionName = "";
                     try {
@@ -953,7 +960,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Log.d("CHECK", "versionName(" + versionName + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "versionName(" + versionName + ")");
 
                     if (arg != null && !arg.equals(versionName)) {
                         new AlertDialog.Builder(MainActivity.this)
@@ -983,7 +990,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendAutoLoginStatus(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendAutoLoginStatus(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendAutoLoginStatus(" + arg + ")");
                     status = arg;
                     SharedPreferences prefs = getSharedPreferences("AuthKeyInfo", Activity.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
@@ -1005,14 +1012,14 @@ public class MainActivity extends AppCompatActivity {
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("AuthKey", arg);
                         editor.commit();
-                        Log.d("CHECK", "insert success : " + sAuthKey);
+                        if (BuildConfig.DEBUG) Log.d("CHECK", "insert success : " + sAuthKey);
                     } else if (status != null && status.equals("off") && arg.equals("")) {
                         SharedPreferences prefs = getSharedPreferences("AuthKeyInfo", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putString("AuthKey", null);
                         editor.commit();
                         sAuthKey = null;
-                        Log.d("CHECK", "delete success : ");
+                        if (BuildConfig.DEBUG) Log.d("CHECK", "delete success : ");
                     }
                 }
             });
@@ -1022,7 +1029,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendUserId(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendUserId(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendUserId(" + arg + ")");
                     DataSet.getInstance().userid = arg;
                 }
             });
@@ -1032,7 +1039,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendIksOutLink(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendIksOutLink(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendIksOutLink(" + arg + ")");
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     Uri u = Uri.parse(DataSet.connect_url+arg);
                     i.setData(u);
@@ -1046,7 +1053,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendOksOutLink(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendOksOutLink(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendOksOutLink(" + arg + ")");
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     Uri u = Uri.parse(DataSet.connect_url+arg);
                     i.setData(u);
@@ -1059,7 +1066,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendCargoDetailtOutLink(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendCargoDetailtOutLink(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendCargoDetailtOutLink(" + arg + ")");
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     Uri u = Uri.parse(DataSet.connect_url+arg);
                     i.setData(u);
@@ -1120,7 +1127,7 @@ public class MainActivity extends AppCompatActivity {
         public void sendLogout(final String arg) {
             handler.post(new Runnable() {
                 public void run() {
-                    Log.d("CHECK", "sendLogout(" + arg + ")");
+                    if (BuildConfig.DEBUG) Log.d("CHECK", "sendLogout(" + arg + ")");
                     if (arg != null && arg.equals("success")) {
                         if (status != null && status.equals("on")) {
                             sAuthKey = arg;
@@ -1221,7 +1228,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void finishGuide() {
-        toast = Toast.makeText(this, "\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
+        toast = Toast.makeText(this, "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -1272,11 +1279,7 @@ public class MainActivity extends AppCompatActivity {
 
         String buildTags = Build.TAGS;
 
-        if(buildTags != null && buildTags.contains("test-keys")) {
-            return true;
-        }else {
-            return false;
-        }
+        return buildTags != null && buildTags.contains("test-keys");
     }
     /* Shell 명령어 실행 가능 여부 */
     public boolean shellComendExecuteCheck() {
@@ -1284,8 +1287,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             process = Runtime.getRuntime().exec(new String[] { "/system/xbin/which", "su" });
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if (in.readLine() != null) return true;
-            return false;
+            return in.readLine() != null;
         } catch (Throwable t) {
             return false;
         } finally {
@@ -1297,7 +1299,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (android.os.Build.VERSION.SDK_INT >= M) {
             // only for LOLLIPOP and newer versions
-            Log.d("CHECK","Hello Marshmallow (마시멜로우)");
+            if (BuildConfig.DEBUG) Log.d("CHECK","Hello Marshmallow (마시멜로우)");
             int permissionResult = getApplicationContext().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
             if (permissionResult == PackageManager.PERMISSION_DENIED) {
@@ -1341,13 +1343,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
-            Log.d("CHECK","(마시멜로우 이하 버전입니다.)");
+            if (BuildConfig.DEBUG) Log.d("CHECK","(마시멜로우 이하 버전입니다.)");
             //   getThumbInfo();
         }
 
     }
 
 
+    @SuppressLint("SuspiciousIndentation")
     public String getHashKey(){
         String hashKey = "";
         PackageInfo packageInfo = null;
@@ -1357,9 +1360,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("####",e.toString());
             e.printStackTrace();
         }
-        if (packageInfo == null)
-            return null;
-
+        if (packageInfo != null) {
             for (Signature signature : packageInfo.signatures) {
                 try {
 
@@ -1371,8 +1372,12 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("KeyHash", "Unable to get MessageDigest.");
                     return null;
                 }
+            }
+            return hashKey;
+        } else {
+            return null;
         }
-        return hashKey;
+
     }
 
 

@@ -44,7 +44,7 @@ public class DataSet {
 	public static String connect_url = "https://www.plism.com";
 //	public static String connect_url = "https://test.plism.com";
 
-	private static DataSet _instance;
+	private static final DataSet _instance;
 
 	static {
 		_instance = new DataSet();
