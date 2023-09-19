@@ -39,10 +39,10 @@ public class DataSet {
 	public String addon;
 
 
-	public static String push_url = "https://testpush.plism.com";
-//	public static String push_url = "https://push.plism.com";
-//	public static String connect_url = "https://www.plism.com";
-	public static String connect_url = "https://test.plism.com";
+//	public static String push_url = "https://testpush.plism.com";
+	public static String push_url = "https://push.plism.com";
+	public static String connect_url = "https://www.plism.com";
+//	public static String connect_url = "https://test.plism.com";
 
 	private static final DataSet _instance;
 
